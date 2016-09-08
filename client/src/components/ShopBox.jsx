@@ -3,7 +3,6 @@ var ProductsBox = require('./ProductsBox');
 
 var sampleProducts = require('../sample.json');
 var Stock = require('../retail/stock.js');
-
 var ShopBox = React.createClass({
 
   getInitialState: function() {
@@ -18,14 +17,14 @@ var ShopBox = React.createClass({
     var stock = new Stock (sampleProducts);
 
     return (
-      <div>
-        <h1> bok </h1>
+      <div className = 'products-box'>
+        <h1> Products:  </h1>
         <ProductsBox
-          products = {stock.items}
-          showDetails = {this.showDetails}
-          selectedProduct = {this.state.selectedProduct}
-         >
-         </ProductsBox> 
+          products={ stock.items }
+          showDetails={ this.showDetails }
+          selectedProduct={ this.state.selectedProduct }
+        >
+        </ProductsBox>
       </div>
     )
   

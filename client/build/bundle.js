@@ -19767,7 +19767,6 @@
 	
 	var sampleProducts = __webpack_require__(161);
 	var Stock = __webpack_require__(162);
-	
 	var ShopBox = React.createClass({
 	  displayName: 'ShopBox',
 	
@@ -19785,11 +19784,11 @@
 	
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'products-box' },
 	      React.createElement(
 	        'h1',
 	        null,
-	        ' bok '
+	        ' Products:  '
 	      ),
 	      React.createElement(ProductsBox, {
 	        products: stock.items,
@@ -19810,13 +19809,17 @@
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	//var ProductsList = require('./ProductsList.jsx');
+	var ProductsList = __webpack_require__(163);
 	
 	var ProductsBox = React.createClass({
 	  displayName: 'ProductsBox',
 	
 	  render: function render() {
-	    return console.log(this.props.products);
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(ProductsList, { products: this.props.products, showDetails: this.props.showDetails })
+	    );
 	  }
 	});
 	
@@ -19944,6 +19947,90 @@
 	  }
 	};
 	module.exports = Stock;
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Product = __webpack_require__(164);
+	
+	var ProductsList = React.createClass({
+	  displayName: 'ProductsList',
+	
+	
+	  render: function render() {
+	    var productListItems = this.props.products.map(function (product, key) {
+	      return React.createElement(Product, { key: product.id, product: product, showDetails: this.props.showDetails });
+	    }.bind(this));
+	    return React.createElement(
+	      'ul',
+	      null,
+	      productListItems
+	    );
+	  }
+	});
+	
+	module.exports = ProductsList;
+
+/***/ },
+/* 164 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	
+	var Product = React.createClass({
+	  displayName: 'Product',
+	
+	
+	  showDetails: function showDetails() {
+	    console.log('It is only the beginning');
+	  },
+	
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h4',
+	        null,
+	        ' Product Name: ',
+	        this.props.product.productName
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        ' Category: ',
+	        this.props.product.category
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        ' Price: ',
+	        this.props.product.price,
+	        ' £'
+	      ),
+	      React.createElement(
+	        'p',
+	        null,
+	        ' Quantity in stock: ',
+	        this.props.product.quantity
+	      ),
+	      React.createElement(
+	        'button',
+	        { onClick: this.showDetails },
+	        'add'
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Product;
 
 /***/ }
 /******/ ]);

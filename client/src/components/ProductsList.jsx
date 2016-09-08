@@ -6,7 +6,7 @@ var ProductsList = React.createClass({
   render: function(){
     var productListItems = this.props.products.map(function(product, key){
       return (
-        <Account product={product} showDetails={ this.props.showDetails }/>
+        <Product key={product.id} product={product} showDetails={ this.props.showDetails }/>
       )
     }.bind(this))
     return(

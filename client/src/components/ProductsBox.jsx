@@ -1,11 +1,13 @@
 var React = require('react');
-//var ProductsList = require('./ProductsList.jsx');
+var ProductsList = require('./ProductsList.jsx');
 
 var ProductsBox = React.createClass({
   render: function(){
     return (
-      console.log(this.props.products)
+      <div>
+        <ProductsList products={ this.props.products } showDetails={ this.props.showDetails }></ProductsList>
 
+      </div>
     )
   }
 })

@@ -12,7 +12,7 @@ var ShopBox = require('./components/ShopBox.jsx')
 
 window.onload = function(){
   ReactDOM.render(
-    <ShopBox ></ShopBox>,
+    <ShopBox />,
     document.getElementById('app')
   );
 

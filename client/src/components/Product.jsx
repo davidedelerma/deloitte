@@ -9,10 +9,10 @@ var Product = React.createClass({
   render:function(){
     return(
       <div>
-        <p> Product Name: {this.props.product.productName}</p>
+        <h4> Product Name: {this.props.product.productName}</h4>
         <p> Category: {this.props.product.category}</p>
-        <p> Price: {this.props.product.price}</p>
-        <p> Quantity: {this.props.product.quantity}</p>
+        <p> Price: {this.props.product.price} £</p>
+        <p> Quantity in stock: {this.props.product.quantity}</p>
         <button onClick={this.showDetails}>add</button>
       </div>
     )

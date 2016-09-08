@@ -6,9 +6,19 @@ describe('cart', function(){
 
   it('should start off with no items ', function(){
     var cart = new Cart();
-    assert.equal(0, cart.items.length);
+    assert.equal(0, cart.getItems().length);
   });
 
+  it('should start off with no vouchers ', function(){
+    var cart = new Cart();
+    assert.equal(0, cart.getVoucher());
+  });
+
+  it('should be able to set the number of vouchers ', function(){
+    var cart = new Cart();
+    cart.setVoucher(2)
+    assert.equal(2, cart.getVoucher());
+  });
 
   it('should be able to add item', function(){
     var cart = new Cart();
@@ -19,7 +29,7 @@ describe('cart', function(){
       "price": 75.00,
     });
     cart.addItem(item,1);
-    assert.equal(1, cart.items[0]['quantity']);
+    assert.equal(1, cart.getItems()[0]['quantity']);
   });
 
   it('should be able to update quantity when add item', function(){
@@ -32,7 +42,7 @@ describe('cart', function(){
     });
     cart.addItem(item,1);
     cart.addItem(item,1);
-    assert.equal(2, cart.items[0]['quantity']);
+    assert.equal(2, cart.getItems()[0]['quantity']);
   });
 
   it('should be able to remove an item', function(){
@@ -45,7 +55,7 @@ describe('cart', function(){
     });
     cart.addItem(item,1);
     cart.removeItem(item);
-    assert.equal(0, cart.items.length);
+    assert.equal(0, cart.getItems().length);
   });
 
   it('should be able to calculate total price', function(){
@@ -66,6 +76,6 @@ describe('cart', function(){
     cart.addItem(item,1);
     cart.addItem(item1,1);
     assert.equal(690, cart.totPrice());
-  });
+  });  
 
 })

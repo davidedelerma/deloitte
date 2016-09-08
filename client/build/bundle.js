@@ -51,21 +51,15 @@
 	//var sampleAccounts = require('./sample.json');
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
-	//var BankBox = require('./components/BankBox.jsx')
+	var ShopBox = __webpack_require__(159);
 	
-	//var bank = new Bank(); this become items
+	//var shop = new Shop(); 
 	//for(var account of sampleAccounts){
 	//  bank.addAccount(account);
 	//}
 	
 	window.onload = function () {
-	  ReactDOM.render(
-	  // <BankBox bank={bank}></BankBox>,
-	  React.createElement(
-	    'h1',
-	    null,
-	    ' test'
-	  ), document.getElementById('app'));
+	  ReactDOM.render(React.createElement(ShopBox, null), document.getElementById('app'));
 	};
 
 /***/ },
@@ -19761,6 +19755,195 @@
 	
 	module.exports = __webpack_require__(3);
 
+
+/***/ },
+/* 159 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ProductsBox = __webpack_require__(160);
+	
+	var sampleProducts = __webpack_require__(161);
+	var Stock = __webpack_require__(162);
+	
+	var ShopBox = React.createClass({
+	  displayName: 'ShopBox',
+	
+	
+	  getInitialState: function getInitialState() {
+	    return { products: sampleProducts, selectedProduct: null };
+	  },
+	
+	  showDetails: function showDetails(product) {
+	    this.setState({ selectedProduct: product });
+	  },
+	
+	  render: function render() {
+	    var stock = new Stock(sampleProducts);
+	
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'h1',
+	        null,
+	        ' bok '
+	      ),
+	      React.createElement(ProductsBox, {
+	        products: stock.items,
+	        showDetails: this.showDetails,
+	        selectedProduct: this.state.selectedProduct
+	      })
+	    );
+	  }
+	
+	});
+	
+	module.exports = ShopBox;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	//var ProductsList = require('./ProductsList.jsx');
+	
+	var ProductsBox = React.createClass({
+	  displayName: 'ProductsBox',
+	
+	  render: function render() {
+	    return console.log(this.props.products);
+	  }
+	});
+	
+	module.exports = ProductsBox;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports) {
+
+	module.exports = [
+	
+	  {
+	    "id": 0,
+	    "productName": "Almond Toe Court Shoes, Patent Black",
+	    "category": "Women Footwear",
+	    "price": 99.00,
+	    "quantity": 5
+	  },
+	  {
+	    "id": 1,
+	    "productName": "Suede Shoes, Blue",
+	    "category": "Women Footwear",
+	    "price": 42.00,
+	    "quantity": 4
+	  },
+	  {
+	    "id": 2,
+	    "productName": "Leather Driver Saddle Loafers, Tan",
+	    "category": "Man Footwear",
+	    "price": 34.00,
+	    "quantity": 12
+	  },
+	  {
+	    "id": 3,
+	    "productName": "Flip Flops, Red",
+	    "category": "Man Footwear",
+	    "price": 19.00,
+	    "quantity": 6
+	  },
+	  {
+	    "id": 4,
+	    "productName": "Flip Flops, Blue",
+	    "category": "Man Footwear",
+	    "price": 19.00,
+	    "quantity": 0
+	  },
+	  {
+	    "id": 5,
+	    "productName": "Gold Button Cardigan, Black",
+	    "category": "Women Casualwear",
+	    "price": 167.00,
+	    "quantity": 6
+	  },
+	  {
+	    "id": 6,
+	    "productName": "Gold Button Cardigan, Black",
+	    "category": "Women Casualwear",
+	    "price": 30.00,
+	    "quantity": 5
+	  },
+	  {
+	    "id": 7,
+	    "productName": "Fine Stripe Short Sleeve Shirt, Grey",
+	    "category": "Man Casualwear",
+	    "price": 49.99,
+	    "quantity": 9
+	  },
+	  {
+	    "id": 8,
+	    "productName": "Fine Stripe Short Sleeve Shirt, Green",
+	    "category": "Man Casualwear",
+	    "price": 39.99,
+	    "quantity": 3
+	  },
+	  {
+	    "id": 9,
+	    "productName": "Sharkskin Waistcoat, Charcoal",
+	    "category": "Man Formalwear",
+	    "price": 75.00,
+	    "quantity": 2
+	  },
+	  {
+	    "id": 10,
+	    "productName": "Lightweight Patch Pocket Blazer, Deer",
+	    "category": "Man Formalwear",
+	    "price": 175.00,
+	    "quantity": 1
+	  },
+	  {
+	    "id": 11,
+	    "productName": "Bird Print Dress, Black",
+	    "category": "Women Formalwear",
+	    "price": 270.00,
+	    "quantity": 10
+	  },
+	  {
+	    "id": 12,
+	    "productName": "Mid Twist Cut-Out Dress, Pink",
+	    "category": "Women Formalwear",
+	    "price": 540.00,
+	    "quantity": 5
+	  }
+	
+	]
+
+/***/ },
+/* 162 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var Stock = function Stock(items) {
+	  this.items = items;
+	};
+	
+	Stock.prototype = {
+	
+	  removeItem: function removeItem(item, quantity) {
+	    var index = this.items.indexOf(item);
+	    if (this.items[index].quantity >= quantity) {
+	      this.items[index].quantity -= quantity;
+	    } else {
+	      return false;
+	    }
+	  }
+	};
+	module.exports = Stock;
 
 /***/ }
 /******/ ]);

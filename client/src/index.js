@@ -3,17 +3,16 @@
 //var sampleAccounts = require('./sample.json');
 var React = require('react');
 var ReactDOM = require('react-dom');
-//var BankBox = require('./components/BankBox.jsx')
+var ShopBox = require('./components/ShopBox.jsx')
 
-//var bank = new Bank(); this become items
+//var shop = new Shop(); 
 //for(var account of sampleAccounts){
 //  bank.addAccount(account);
 //}
 
 window.onload = function(){
   ReactDOM.render(
-    // <BankBox bank={bank}></BankBox>,
-    <h1> test</h1>,
+    <ShopBox ></ShopBox>,
     document.getElementById('app')
   );
 

@@ -1,13 +1,12 @@
 var React = require('react');
-var Product = require('./Product')
+var CartProduct = require('./CartProduct')
 
-var ProductsList = React.createClass({
+var CartList = React.createClass({
 
   render: function(){
     var productListItems = this.props.products.map(function(product, key){
       return (
-        <Product key={product.id} product={product} 
-          addProduct={this.props.addProduct}
+        <CartProduct key={product.id} product={product} removeFromCart={this.props.removeFromCart}
         />
       )
     }.bind(this))
@@ -19,4 +18,4 @@ var ProductsList = React.createClass({
   }
 })
 
-module.exports = ProductsList;
+module.exports = CartList;

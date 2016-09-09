@@ -2,8 +2,8 @@ var React = require('react');
 
 var Product = React.createClass({
     
-  showDetails: function(){
-    console.log('It is only the beginning')
+  addProduct: function(){
+    this.props.addProduct(this.props.product)
   },
 
   render:function(){
@@ -13,7 +13,7 @@ var Product = React.createClass({
         <p> Category: {this.props.product.category}</p>
         <p> Price: {this.props.product.price} £</p>
         <p> Quantity in stock: {this.props.product.quantity}</p>
-        <button onClick={this.showDetails}>add</button>
+        <button onClick={this.addProduct}>add</button>
       </div>
     )
   }

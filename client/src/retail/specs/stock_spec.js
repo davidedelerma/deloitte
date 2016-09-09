@@ -1,5 +1,5 @@
 var Stock = require('../stock');
-var Item = require('../Item');
+var Item = require('../item');
 var assert = require('assert');
 
 describe('stock', function(){
@@ -31,6 +31,11 @@ describe('stock', function(){
   it('should be able to remove items ', function(){  
     stock.removeItem(items[0], 1)
     assert.equal(4, stock.items[0].quantity);
+  });
+
+  it('should be add items ', function(){  
+    stock.addExsitingItem(items[0])
+    assert.equal(6, stock.items[0].quantity);
   });
 
   it('should not be able to remove items if quantity more than stock ', function(){  

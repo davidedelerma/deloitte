@@ -5,7 +5,7 @@ var ProductsBox = React.createClass({
   render: function(){
     return (
       <div>
-        <ProductsList products={ this.props.products } showDetails={ this.props.showDetails }></ProductsList>
+        <ProductsList products={ this.props.products } addProduct = {this.props.addProduct}></ProductsList>
 
       </div>
     )

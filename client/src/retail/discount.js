@@ -4,13 +4,12 @@ var Discount = function(){
 
 Discount.prototype = {
 
-  applyDiscount: function( spentOver, discount , cart) {
-    if (cart.getVoucher() >= 1 ){  
-      if ( cart.totPrice() > spentOver ) {
-        cart.setVoucher(cart.getVoucher() - 1)
-        return ( cart.totPrice() - discount );
-      }
-    }
+  applyDiscount: function( spentOver, discount , cart) {    
+    cart.totPrice()      
+    if ( cart.getTotPrice() > spentOver ) {
+      cart.updateTotPrice(discount)
+      return true
+    }    
     return false;
   }
 

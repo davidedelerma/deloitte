@@ -1,19 +1,27 @@
 
 var Cart = function(){
-  this._voucher = 0
   this._items = [];
+  this._totalPrice = '';
 }
 
 Cart.prototype = {
   
+  findItemById:function(item){
+    var index = -1
+    this._items.forEach(function(itemInCart){
+      if (item.id === itemInCart.id){
+        index+=1
+      }
+    })
+    return index
+  },
+
   addItem: function(item, quantity){
-    //if it doesn't exsist push  and quantity 0 else quanty +1
-    if (this._items.indexOf(item) == -1){
-      // just use quantity for everithyng
+    if (this.findItemById(item) == -1){
       item['quantity'] = quantity
       this._items.push(item);
     } else {
-      var index = this._items.indexOf(item)
+      var index = this.findItemById(item)
       this._items[index]['quantity'] += quantity
     }    
   },
@@ -22,27 +30,34 @@ Cart.prototype = {
     return this._items
   },
 
-  getVoucher: function(){
-    return this._voucher
+  getTotPrice: function(){
+    return this._totalPrice
   },
 
-  setVoucher: function(nbOfVoucher){
-    this._voucher = nbOfVoucher
+  updateTotPrice: function(amount){
+    this._totalPrice -= amount
   },
 
   removeItem: function(item){
-    if (this._items.indexOf(item) != -1){
-      var index = this._items.indexOf(item)
-      this._items.splice(index, 1);
+    if (this.findItemById(item) != -1){
+      var index = this.findItemById(item)
+      if (this._items[index].quantity>1){
+        this._items[index].quantity -= 1
+      } else{
+        this._items.splice(index, 1);
+      }
     }
   },
 
   totPrice: function(){
-    var totalPrice = 0
+    this._totalPrice = 0
     this._items.forEach(function(item){
-      totalPrice += item.price * item.quantity
-    })
-   return totalPrice
+      this._totalPrice += item.price * item.quantity
+    }.bind(this))
+  },
+
+  empty: function(){
+    this._items = []
   }
 }
 

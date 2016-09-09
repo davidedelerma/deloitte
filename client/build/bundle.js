@@ -19836,12 +19836,13 @@
 	    cart.items = this.state.cart;
 	    if (newProduct.quantity > 0) {
 	      cart.addItem(new Item(newProduct), 1);
+	      var newDiscounted = this.state.discountedPrice + newProduct.price;
+	      this.setState({ discountedPrice: newDiscounted });
 	    }
 	    var stock = new Stock(this.state.products);
 	    stock.removeItem(newProduct, 1);
 	    cart.totPrice();
-	    var newDiscounted = this.state.discountedPrice + newProduct.price;
-	    this.setState({ products: stock.items, cart: cart.items, cartPrice: cart.totalPrice, discountedPrice: newDiscounted });
+	    this.setState({ products: stock.items, cart: cart.items, cartPrice: cart.totalPrice });
 	  },
 	
 	  removeFromCart: function removeFromCart(item) {
@@ -19867,7 +19868,7 @@
 	        React.createElement(
 	          'h1',
 	          null,
-	          ' Products:  '
+	          ' Deloitte Clothing Retailer  '
 	        ),
 	        React.createElement(ProductsBox, {
 	          products: stock.items,
@@ -19897,17 +19898,17 @@
 	        }),
 	        React.createElement(
 	          'button',
-	          { onClick: this.handleDiscount5 },
+	          { className: 'button', onClick: this.handleDiscount5 },
 	          ' Voucher 5 £ '
 	        ),
 	        React.createElement(
 	          'button',
-	          { onClick: this.handleDiscount10 },
+	          { className: 'button', onClick: this.handleDiscount10 },
 	          ' Voucher 10 £ '
 	        ),
 	        React.createElement(
 	          'button',
-	          { onClick: this.handleDiscount15 },
+	          { className: 'button', onClick: this.handleDiscount15 },
 	          ' Voucher 15 £ '
 	        ),
 	        React.createElement(
@@ -19940,7 +19941,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'list' },
 	      React.createElement(ProductsList, { products: this.props.products, addProduct: this.props.addProduct })
 	    );
 	  }
@@ -20135,40 +20136,78 @@
 	  },
 	
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'h4',
+	
+	    if (this.props.product.quantity > 0) {
+	      return React.createElement(
+	        'li',
 	        null,
-	        ' Product Name: ',
-	        this.props.product.productName
-	      ),
-	      React.createElement(
-	        'p',
+	        React.createElement(
+	          'h4',
+	          null,
+	          ' Product Name: ',
+	          this.props.product.productName
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Category: ',
+	          this.props.product.category
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Price: ',
+	          this.props.product.price,
+	          ' £'
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Quantity in stock: ',
+	          this.props.product.quantity
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'addremove-button', onClick: this.addProduct },
+	          'add'
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'li',
 	        null,
-	        ' Category: ',
-	        this.props.product.category
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        ' Price: ',
-	        this.props.product.price,
-	        ' £'
-	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        ' Quantity in stock: ',
-	        this.props.product.quantity
-	      ),
-	      React.createElement(
-	        'button',
-	        { onClick: this.addProduct },
-	        'add'
-	      )
-	    );
+	        React.createElement(
+	          'h4',
+	          null,
+	          ' Product Name: ',
+	          this.props.product.productName
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Category: ',
+	          this.props.product.category
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Price: ',
+	          this.props.product.price,
+	          ' £'
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Quantity in stock: ',
+	          this.props.product.quantity
+	        ),
+	        React.createElement(
+	          'button',
+	          { className: 'addremove-pressedbutton' },
+	          'add'
+	        )
+	      );
+	    }
 	  }
 	
 	});
@@ -20342,7 +20381,7 @@
 	      ),
 	      React.createElement(
 	        'button',
-	        { onClick: this.deleteProduct },
+	        { className: 'addremove-button', onClick: this.deleteProduct },
 	        'remove'
 	      )
 	    );

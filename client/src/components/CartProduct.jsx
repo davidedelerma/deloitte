@@ -11,7 +11,7 @@ var CartProduct = React.createClass({
       <div>
         <h4> Product Name: {this.props.product.productName}</h4>
         <p> Price: {this.props.product.price} £ - Quantity: {this.props.product.quantity}</p>
-        <button onClick={this.deleteProduct}>remove</button>
+        <button className='addremove-button' onClick={this.deleteProduct}>remove</button>
       </div>
     )
   }

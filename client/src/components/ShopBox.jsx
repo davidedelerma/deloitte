@@ -76,12 +76,13 @@ var ShopBox = React.createClass({
     cart.items=this.state.cart
     if (newProduct.quantity>0){
       cart.addItem(new Item(newProduct),1);
+      var newDiscounted = this.state.discountedPrice + newProduct.price
+      this.setState({discountedPrice: newDiscounted})
     }
     var stock = new Stock(this.state.products);
     stock.removeItem(newProduct,1)
     cart.totPrice()
-    var newDiscounted = this.state.discountedPrice + newProduct.price
-    this.setState({products: stock.items, cart: cart.items, cartPrice: cart.totalPrice, discountedPrice: newDiscounted} )
+    this.setState({products: stock.items, cart: cart.items, cartPrice: cart.totalPrice} )
   },
 
   removeFromCart: function(item){
@@ -101,7 +102,7 @@ var ShopBox = React.createClass({
     return (
       <div>
         <div className = 'products-box'>
-          <h1> Products:  </h1>
+          <h1> Deloitte Clothing Retailer  </h1>
           <ProductsBox
             products={ stock.items }
             addProduct={this.addProduct}
@@ -118,9 +119,9 @@ var ShopBox = React.createClass({
             removeFromCart={this.removeFromCart}
           >
           </CartBox>
-          <button onClick={this.handleDiscount5}> Voucher 5 £ </button>
-          <button onClick={this.handleDiscount10}> Voucher 10 £ </button>
-          <button onClick={this.handleDiscount15}> Voucher 15 £ </button>
+          <button className='button' onClick={this.handleDiscount5}> Voucher 5 £ </button>
+          <button className='button' onClick={this.handleDiscount10}> Voucher 10 £ </button>
+          <button className='button' onClick={this.handleDiscount15}> Voucher 15 £ </button>
           <p> Discounted Price: { this.state.discountedPrice } £ </p>
         </div>
       </div>

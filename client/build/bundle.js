@@ -46,8 +46,6 @@
 
 	'use strict';
 	
-	var Cart = __webpack_require__(165);
-	var User = __webpack_require__(166);
 	//var sampleAccounts = require('./sample.json');
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
@@ -57,10 +55,8 @@
 	//for(var account of sampleAccounts){
 	//  bank.addAccount(account);
 	//}
-	var cart = new Cart();
-	var user = new User("Davide", 10000, cart, 3, 4, 5);
 	window.onload = function () {
-	  ReactDOM.render(React.createElement(ShopBox, { user: user }), document.getElementById('app'));
+	  ReactDOM.render(React.createElement(ShopBox, null), document.getElementById('app'));
 	};
 
 /***/ },
@@ -19770,90 +19766,93 @@
 	var sampleProducts = __webpack_require__(161);
 	var Stock = __webpack_require__(162);
 	var Cart = __webpack_require__(165);
-	var User = __webpack_require__(166);
+	var Discount = __webpack_require__(171);
 	var Item = __webpack_require__(167);
 	var ShopBox = React.createClass({
 	  displayName: 'ShopBox',
 	
 	
 	  getInitialState: function getInitialState() {
-	    return { products: sampleProducts, selectedProduct: null, cart: [], selectedCartProduct: null, cartPrice: 0 };
+	    return { products: sampleProducts, selectedProduct: null, cart: [], selectedCartProduct: null, cartPrice: 0, discountedPrice: 0, counter: 0 };
 	  },
 	
 	  showDetails: function showDetails(product) {
 	    this.setState({ selectedProduct: product });
 	  },
 	
+	  handleDiscount5: function handleDiscount5() {
+	    var counter = this.state.counter + 1;
+	    this.setState({ counter: counter });
+	    var discount = new Discount();
+	    if (counter === 1) {
+	      var appliable = discount.applyDiscount(0, 5, this.state.cartPrice);
+	      if (appliable === true) {
+	        this.setState({ discountedPrice: discount.totalPrice });
+	      } else if (appliable === false) {
+	        alert('you are not eligible for this voucher');
+	        this.setState({ counter: 0 });
+	      }
+	    } else if (counter > 1) {
+	      alert("you have already used a voucher for this order");
+	    }
+	  },
+	
+	  handleDiscount10: function handleDiscount10() {
+	    var counter = this.state.counter + 1;
+	    this.setState({ counter: counter });
+	    var discount = new Discount();
+	    if (counter === 1) {
+	      var appliable = discount.applyDiscount(50, 10, this.state.cartPrice);
+	      if (appliable === true) {
+	        this.setState({ discountedPrice: discount.totalPrice });
+	      } else if (appliable === false) {
+	        alert('you are not eligible for this voucher');
+	        this.setState({ counter: 0 });
+	      }
+	    } else if (counter > 1) {
+	      alert("you have already used a voucher for this order");
+	    }
+	  },
+	
+	  handleDiscount15: function handleDiscount15() {
+	    var counter = this.state.counter + 1;
+	    this.setState({ counter: counter });
+	    var discount = new Discount();
+	    if (counter === 1) {
+	      var appliable = discount.applyDiscount(75, 15, this.state.cartPrice);
+	      if (appliable === true) {
+	        this.setState({ discountedPrice: discount.totalPrice });
+	      } else if (appliable === false) {
+	        alert('you are not eligible for this voucher');
+	        this.setState({ counter: 0 });
+	      }
+	    } else if (counter > 1) {
+	      alert("you have already used a voucher for this order");
+	    }
+	  },
+	
 	  addProduct: function addProduct(newProduct) {
 	    var cart = new Cart();
-	    var stock = new Stock(sampleProducts);
-	    stock.removeItem(newProduct, 1);
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-	
-	    try {
-	      for (var _iterator = this.state.cart[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var product = _step.value;
-	
-	        cart.addItem(new Item(product), 1);
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
+	    cart.items = this.state.cart;
+	    if (newProduct.quantity > 0) {
+	      cart.addItem(new Item(newProduct), 1);
 	    }
-	
-	    cart.addItem(new Item(newProduct), 1);
+	    var stock = new Stock(this.state.products);
+	    stock.removeItem(newProduct, 1);
 	    cart.totPrice();
-	    this.setState({ products: stock.items, cart: cart.getItems(), cartPrice: cart.getTotPrice() });
+	    var newDiscounted = this.state.discountedPrice + newProduct.price;
+	    this.setState({ products: stock.items, cart: cart.items, cartPrice: cart.totalPrice, discountedPrice: newDiscounted });
 	  },
 	
 	  removeFromCart: function removeFromCart(item) {
 	    var cart = new Cart();
+	    cart.items = this.state.cart;
 	    var stock = new Stock(this.state.products);
-	    var _iteratorNormalCompletion2 = true;
-	    var _didIteratorError2 = false;
-	    var _iteratorError2 = undefined;
-	
-	    try {
-	      for (var _iterator2 = this.state.cart[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	        var product = _step2.value;
-	
-	        cart.addItem(new Item(product), 1);
-	      }
-	    } catch (err) {
-	      _didIteratorError2 = true;
-	      _iteratorError2 = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	          _iterator2.return();
-	        }
-	      } finally {
-	        if (_didIteratorError2) {
-	          throw _iteratorError2;
-	        }
-	      }
-	    }
-	
 	    cart.removeItem(item);
 	    cart.totPrice();
 	    stock.addExsitingItem(item);
-	    this.setState({ products: stock.items, cart: cart.getItems(), cartPrice: cart.getTotPrice() });
-	  },
-	
-	  getItemsInCart: function getItemsInCart() {
-	    return this.props.user.cart.getItems();
+	    var newDiscounted = this.state.discountedPrice - item.price;
+	    this.setState({ products: stock.items, cart: cart.items, cartPrice: cart.totalPrice, discountedPrice: newDiscounted });
 	  },
 	
 	  render: function render() {
@@ -19895,7 +19894,29 @@
 	          products: this.state.cart,
 	          selectedProduct: this.state.selectedCartProduct,
 	          removeFromCart: this.removeFromCart
-	        })
+	        }),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleDiscount5 },
+	          ' Voucher 5 £ '
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleDiscount10 },
+	          ' Voucher 10 £ '
+	        ),
+	        React.createElement(
+	          'button',
+	          { onClick: this.handleDiscount15 },
+	          ' Voucher 15 £ '
+	        ),
+	        React.createElement(
+	          'p',
+	          null,
+	          ' Discounted Price: ',
+	          this.state.discountedPrice,
+	          ' £ '
+	        )
 	      )
 	    );
 	  }
@@ -20041,11 +20062,12 @@
 	
 	  findItemById: function findItemById(item) {
 	    var index = -1;
-	    this.items.forEach(function (itemInCart) {
-	      if (item.id === itemInCart.id) {
-	        index += 1;
+	    for (var i = 0, len = this.items.length; i < len; i++) {
+	      if (this.items[i].id === item.id) {
+	        index = i;
+	        break;
 	      }
-	    });
+	    }
 	    return index;
 	  },
 	
@@ -20160,130 +20182,65 @@
 	'use strict';
 	
 	var Cart = function Cart() {
-	  this._items = [];
-	  this._totalPrice = '';
+	  this.items = [];
+	  this.totalPrice = '';
 	};
 	
 	Cart.prototype = {
 	
 	  findItemById: function findItemById(item) {
+	
 	    var index = -1;
-	    this._items.forEach(function (itemInCart) {
-	      if (item.id === itemInCart.id) {
-	        index += 1;
+	    for (var i = 0, len = this.items.length; i < len; i++) {
+	      if (this.items[i].id === item.id) {
+	        index = i;
+	        break;
 	      }
-	    });
+	    }
 	    return index;
 	  },
 	
 	  addItem: function addItem(item, quantity) {
 	    if (this.findItemById(item) == -1) {
 	      item['quantity'] = quantity;
-	      this._items.push(item);
+	      this.items.push(item);
 	    } else {
 	      var index = this.findItemById(item);
-	      this._items[index]['quantity'] += quantity;
+	      this.items[index].quantity += quantity;
 	    }
 	  },
 	
-	  getItems: function getItems() {
-	    return this._items;
-	  },
-	
-	  getTotPrice: function getTotPrice() {
-	    return this._totalPrice;
-	  },
-	
 	  updateTotPrice: function updateTotPrice(amount) {
-	    this._totalPrice -= amount;
+	    this.totalPrice -= amount;
 	  },
 	
 	  removeItem: function removeItem(item) {
 	    if (this.findItemById(item) != -1) {
 	      var index = this.findItemById(item);
-	      if (this._items[index].quantity > 1) {
-	        this._items[index].quantity -= 1;
+	      if (this.items[index].quantity > 1) {
+	        this.items[index].quantity -= 1;
 	      } else {
-	        this._items.splice(index, 1);
+	        this.items.splice(index, 1);
 	      }
 	    }
 	  },
 	
 	  totPrice: function totPrice() {
-	    this._totalPrice = 0;
-	    this._items.forEach(function (item) {
-	      this._totalPrice += item.price * item.quantity;
+	    this.totalPrice = 0;
+	    this.items.forEach(function (item) {
+	      this.totalPrice += item.price * item.quantity;
 	    }.bind(this));
 	  },
 	
 	  empty: function empty() {
-	    this._items = [];
+	    this.items = [];
 	  }
 	};
 	
 	module.exports = Cart;
 
 /***/ },
-/* 166 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	var User = function User(name, balance, cart, voucher0, voucher10, voucher15) {
-	  this._voucher0 = voucher0;
-	  this._voucher10 = voucher10;
-	  this._voucher15 = voucher15;
-	  this._name = name;
-	  this._balance = balance;
-	  this.cart = cart;
-	};
-	
-	User.prototype = {
-	  getName: function getName() {
-	    return this._name;
-	  },
-	  getBalance: function getBalance() {
-	    return this._balance;
-	  },
-	  getNbOfVouchers0: function getNbOfVouchers0() {
-	    return this._voucher0;
-	  },
-	  getNbOfVouchers10: function getNbOfVouchers10() {
-	    return this._voucher10;
-	  },
-	  getNbOfVouchers15: function getNbOfVouchers15() {
-	    return this._voucher15;
-	  },
-	  updateVoucher0: function updateVoucher0() {
-	    if (this._voucher0 > 1) {
-	      this._voucher0 -= 1;
-	    }
-	  },
-	  updateVoucher10: function updateVoucher10() {
-	    if (this._voucher10 > 1) {
-	      this._voucher10 -= 1;
-	    }
-	  },
-	  updateVoucher15: function updateVoucher15() {
-	    if (this._voucher15 > 1) {
-	      this._voucher15 -= 1;
-	    }
-	  },
-	
-	  checkout: function checkout() {
-	    this.cart.totPrice();
-	    if (this._balance > this.cart.getTotPrice()) {
-	      this._balance -= this.cart.getTotPrice();
-	      this.cart.empty();
-	      return true;
-	    }
-	    return false;
-	  }
-	
-	};
-	module.exports = User;
-
-/***/ },
+/* 166 */,
 /* 167 */
 /***/ function(module, exports) {
 
@@ -20363,7 +20320,6 @@
 	
 	  deleteProduct: function deleteProduct() {
 	    this.props.removeFromCart(this.props.product);
-	    console.log('remove button');
 	  },
 	
 	  render: function render() {
@@ -20395,6 +20351,30 @@
 	});
 	
 	module.exports = CartProduct;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var Discount = function Discount() {
+	  this.totalPrice = '';
+	};
+	
+	Discount.prototype = {
+	
+	  applyDiscount: function applyDiscount(spentOver, discount, cartPrice) {
+	    if (cartPrice > spentOver) {
+	      this.totalPrice = cartPrice - discount;
+	      return true;
+	    }
+	    return false;
+	  }
+	
+	};
+	
+	module.exports = Discount;
 
 /***/ }
 /******/ ]);

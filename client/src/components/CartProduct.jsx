@@ -4,7 +4,6 @@ var CartProduct = React.createClass({
     
   deleteProduct: function(){
     this.props.removeFromCart(this.props.product)
-    console.log('remove button')
   },
 
   render:function(){

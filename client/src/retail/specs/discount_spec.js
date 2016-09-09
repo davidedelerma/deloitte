@@ -22,9 +22,10 @@ describe('discount', function(){
     cart.addItem(item,1);
     cart.addItem(item,1);
     cart.addItem(item1,1);
+    cart.totPrice()
     var discount = new Discount()
-    discount.applyDiscount(0, 5, cart)
-    assert.equal(685, cart.getTotPrice())
+    discount.applyDiscount(0, 5, cart.totalPrice)
+    assert.equal(685, discount.totalPrice)
   });
 
   it('should be able to apply 10£ off when totPrice more than 50 ', function(){
@@ -44,9 +45,10 @@ describe('discount', function(){
     cart.addItem(item,1);
     cart.addItem(item,1);
     cart.addItem(item1,1);
+    cart.totPrice()
     var discount = new Discount()
-    discount.applyDiscount(50, 10, cart)
-    assert.equal(680, cart.getTotPrice())
+    discount.applyDiscount(50, 10, cart.totalPrice)
+    assert.equal(680, discount.totalPrice)
   });
 
   it('should not be able to apply 10£ off when totPrice less than 50 ', function(){
@@ -58,8 +60,9 @@ describe('discount', function(){
       "price": 15.00,
     })
     cart.addItem(item,1);
+    cart.totPrice()
     var discount = new Discount()
-    assert.equal(false, discount.applyDiscount(50, 10, cart))
+    assert.equal(false, discount.applyDiscount(50, 10, cart.totalPrice))
   });
 
   it('should be able to apply 15£ off when totPrice more than 75 ', function(){
@@ -79,9 +82,10 @@ describe('discount', function(){
     cart.addItem(item,1);
     cart.addItem(item,1);
     cart.addItem(item1,1);
+    cart.totPrice()
     var discount = new Discount()
-    discount.applyDiscount(75, 15, cart)
-    assert.equal(675, cart.getTotPrice())
+    discount.applyDiscount(75, 15, cart.totalPrice)
+    assert.equal(675, discount.totalPrice)
   });
 
   it('should not be able to apply 15£ off when totPrice less than 75 ', function(){
@@ -93,8 +97,9 @@ describe('discount', function(){
       "price": 15.00,
     })
     cart.addItem(item,1);
+    cart.totPrice()
     var discount = new Discount()
-    assert.equal(false, discount.applyDiscount(75, 15, cart))
+    assert.equal(false, discount.applyDiscount(75, 15, cart.totalPrice))
   });
 
 

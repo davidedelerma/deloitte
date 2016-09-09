@@ -1,13 +1,13 @@
 
 var Discount = function(){
+  this.totalPrice=''
 }
 
 Discount.prototype = {
 
-  applyDiscount: function( spentOver, discount , cart) {    
-    cart.totPrice()      
-    if ( cart.getTotPrice() > spentOver ) {
-      cart.updateTotPrice(discount)
+  applyDiscount: function( spentOver, discount , cartPrice) {    
+    if ( cartPrice > spentOver ) {
+      this.totalPrice = cartPrice-discount
       return true
     }    
     return false;

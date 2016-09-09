@@ -6,12 +6,13 @@ var Stock = function(items){
 Stock.prototype = {
 
   findItemById:function(item){
-    var index = -1
-    this.items.forEach(function(itemInCart){
-      if (item.id === itemInCart.id){
-        index+=1
-      }
-    })
+    var index = -1;
+    for(var i = 0, len = this.items.length; i < len; i++) {
+        if (this.items[i].id === item.id) {
+            index = i;
+            break;
+        }
+    }
     return index
   },
 

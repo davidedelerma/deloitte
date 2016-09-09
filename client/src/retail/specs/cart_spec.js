@@ -6,7 +6,7 @@ describe('cart', function(){
 
   it('should start off with no items ', function(){
     var cart = new Cart();
-    assert.equal(0, cart.getItems().length);
+    assert.equal(0, cart.items.length);
   });
 
 
@@ -19,8 +19,22 @@ describe('cart', function(){
       "category": "Man Formalwear",
       "price": 75.00,
     });
+    var item2 = new Item({
+      "id": 9,
+      "productName": "Sharkskin Waistcoat, Charcoal",
+      "category": "Man Formalwear",
+      "price": 75.00,
+    });
+    var item3 = new Item({
+      "id": 9,
+      "productName": "Sharkskin Waistcoat, Charcoal",
+      "category": "Man Formalwear",
+      "price": 75.00,
+    });
     cart.addItem(item,1);
-    assert.equal(1, cart.getItems()[0]['quantity']);
+    cart.addItem(item2,1);
+    cart.addItem(item3,1);
+    assert.equal(3, cart.items[0].quantity);
   });
 
   it('should be able to update quantity when add item', function(){
@@ -33,7 +47,7 @@ describe('cart', function(){
     });
     cart.addItem(item,1);
     cart.addItem(item,1);
-    assert.equal(2, cart.getItems()[0]['quantity']);
+    assert.equal(2, cart.items[0].quantity);
   });
 
   it('should be able to remove an item', function(){
@@ -46,7 +60,7 @@ describe('cart', function(){
     });
     cart.addItem(item,2);
     cart.removeItem(item);
-    assert.equal(1, cart.getItems().length);
+    assert.equal(1, cart.items.length);
   });
 
   it('should be able to calculate total price', function(){
@@ -67,7 +81,7 @@ describe('cart', function(){
     cart.addItem(item,1);
     cart.addItem(item1,1);
     cart.totPrice()
-    assert.equal(690, cart.getTotPrice());
+    assert.equal(690, cart.totalPrice);
   });  
 
 })

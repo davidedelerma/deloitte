@@ -3,7 +3,7 @@ var Item = require('../item');
 var User = require('../user');
 var assert = require('assert');
 
-describe('stock', function(){
+describe('user', function(){
 
   beforeEach(function () {
     cart = new Cart();
@@ -18,33 +18,28 @@ describe('stock', function(){
   });
 
   it('should have a name ', function(){  
-    assert.equal("Davide", user.getName());
+    assert.equal("Davide", user.name);
   });
 
   it('should have a budget ', function(){  
-    assert.equal(10000, user.getBalance());
+    assert.equal(10000, user.balance);
   });
 
   it('should ba able to update voucher0', function(){  
     user.updateVoucher0()
-    assert.equal(2, user.getNbOfVouchers0());
+    assert.equal(2, user.voucher0);
   });
 
   it('should ba able to update voucher10', function(){  
     user.updateVoucher10()
-    assert.equal(3, user.getNbOfVouchers10());
+    assert.equal(3, user.voucher10);
   });
 
   it('should ba able to update voucher15', function(){  
     user.updateVoucher15()
-    assert.equal(4, user.getNbOfVouchers15());
+    assert.equal(4, user.voucher15);
   });
 
-  it('should ba able to checkout', function(){  
-    user.checkout()
-    assert.equal(0, user.cart.getItems().length);
-    assert.equal(9925, user.getBalance());
-  });
 })
 
 

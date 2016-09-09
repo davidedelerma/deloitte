@@ -5,44 +5,94 @@ var CartBox = require('./CartBox');
 var sampleProducts = require('../sample.json');
 var Stock = require('../retail/stock.js');
 var Cart = require('../retail/cart.js');
-var User = require('../retail/user.js');
+var Discount = require('../retail/discount.js');
 var Item = require('../retail/item.js');
 var ShopBox = React.createClass({
 
   getInitialState: function() {
-    return { products: sampleProducts, selectedProduct: null, cart: [], selectedCartProduct: null, cartPrice: 0 }
+    return { products: sampleProducts, selectedProduct: null, cart: [], selectedCartProduct: null, cartPrice: 0, discountedPrice: 0, counter: 0}
   },
 
   showDetails: function(product){
     this.setState({selectedProduct: product})
   },
 
+  handleDiscount5: function(){
+    var counter = this.state.counter + 1
+    this.setState({counter: counter})
+    var discount = new Discount()
+    if (counter === 1){
+      var appliable = discount.applyDiscount(0, 5, this.state.cartPrice)
+      if(appliable === true){
+        this.setState({discountedPrice: discount.totalPrice})
+      } 
+      else if (appliable === false) {
+      alert('you are not eligible for this voucher')
+      this.setState({counter: 0})
+      }
+    }else if(counter > 1){
+      alert("you have already used a voucher for this order");
+    }
+  },
+
+  handleDiscount10: function(){
+    var counter = this.state.counter + 1
+    this.setState({counter: counter})
+    var discount = new Discount()
+    if (counter === 1){
+      var appliable = discount.applyDiscount(50, 10, this.state.cartPrice)
+      if(appliable === true){
+        this.setState({discountedPrice: discount.totalPrice})
+      } 
+      else if (appliable === false) {
+      alert('you are not eligible for this voucher')
+      this.setState({counter: 0})
+      }
+    }else if(counter > 1){
+      alert("you have already used a voucher for this order");
+    }
+  },
+
+  handleDiscount15: function(){
+    var counter = this.state.counter + 1
+    this.setState({counter: counter})
+    var discount = new Discount()
+    if (counter === 1){
+      var appliable = discount.applyDiscount(75, 15, this.state.cartPrice)
+      if(appliable === true){
+        this.setState({discountedPrice: discount.totalPrice})
+      } 
+      else if (appliable === false) {
+      alert('you are not eligible for this voucher')
+      this.setState({counter: 0})
+      }
+    }else if(counter > 1){
+      alert("you have already used a voucher for this order");
+    }
+  },
+
   addProduct: function(newProduct){
     var cart = new Cart();
-    var stock = new Stock(sampleProducts);
-    stock.removeItem(newProduct,1)
-    for(var product of this.state.cart){
-      cart.addItem(new Item(product),1);
+    cart.items=this.state.cart
+    if (newProduct.quantity>0){
+      cart.addItem(new Item(newProduct),1);
     }
-    cart.addItem(new Item(newProduct),1);
+    var stock = new Stock(this.state.products);
+    stock.removeItem(newProduct,1)
     cart.totPrice()
-    this.setState({products: stock.items, cart: cart.getItems(), cartPrice: cart.getTotPrice()} )
+    var newDiscounted = this.state.discountedPrice + newProduct.price
+    this.setState({products: stock.items, cart: cart.items, cartPrice: cart.totalPrice, discountedPrice: newDiscounted} )
   },
 
   removeFromCart: function(item){
     var cart = new Cart();
+    cart.items = this.state.cart
     var stock = new Stock(this.state.products)
-    for(var product of this.state.cart){
-      cart.addItem(new Item(product),1);
-    }
     cart.removeItem(item)
     cart.totPrice()
     stock.addExsitingItem(item)
-    this.setState({products: stock.items, cart:cart.getItems(), cartPrice: cart.getTotPrice()})
-  },
-
-  getItemsInCart:function(){
-    return this.props.user.cart.getItems()
+    var newDiscounted = this.state.discountedPrice - item.price
+    this.setState({products: stock.items, cart:cart.items, cartPrice: cart.totalPrice, discountedPrice: newDiscounted})
   },
 
   render: function(){
@@ -68,6 +118,10 @@ var ShopBox = React.createClass({
             removeFromCart={this.removeFromCart}
           >
           </CartBox>
+          <button onClick={this.handleDiscount5}> Voucher 5 £ </button>
+          <button onClick={this.handleDiscount10}> Voucher 10 £ </button>
+          <button onClick={this.handleDiscount15}> Voucher 15 £ </button>
+          <p> Discounted Price: { this.state.discountedPrice } £ </p>
         </div>
       </div>
     )
